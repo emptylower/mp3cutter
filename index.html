@@ -3,21 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>音频裁剪工具 - Audio Trimmer</title>
+    <title>SmartKit - 音频裁剪器 | 在线音频编辑工具</title>
+    <meta name="description" content="SmartKit音频裁剪器 - 免费在线音频编辑工具，支持MP3、WAV等多种格式，无需上传服务器，保护您的隐私">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/landing.css">
     <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/wavesurfer.min.js"></script>
     <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.regions.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🎵 音频裁剪工具</h1>
-            <p class="subtitle">轻松裁剪音频，支持多种格式</p>
-        </header>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="brand">
+                    <img src="logo/smartkit.svg" alt="SmartKit" class="logo">
+                    <span class="brand-name">SmartKit</span>
+                </div>
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link">首页</a>
+                    <a href="#features" class="nav-link">功能</a>
+                    <a href="#tutorial" class="nav-link">教程</a>
+                    <a href="#faq" class="nav-link">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-        <main>
-            <!-- 文件上传区域 -->
+    <!-- 主页 Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-container">
+            <h1 class="hero-title">
+                <span class="gradient-text">音频裁剪器</span>
+            </h1>
+            <p class="hero-subtitle">在线裁剪音频，简单快速，无需安装软件</p>
+            
+            <!-- 上传区域 -->
             <div class="upload-section" id="uploadSection">
                 <div class="upload-area" id="uploadArea">
                     <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -153,22 +174,161 @@
                     </div>
                 </div>
             </div>
-        </main>
 
-        <!-- 加载提示 -->
-        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
-            <div class="loading-content">
-                <div class="spinner"></div>
-                <p id="loadingMessage">处理中...</p>
+            <div class="scroll-hint">
+                <svg class="scroll-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+                <span>了解更多</span>
             </div>
         </div>
+    </section>
 
-        <!-- 提示消息 -->
-        <div class="toast" id="toast"></div>
+    <!-- 功能优势 -->
+    <section id="features" class="features-section">
+        <div class="section-container">
+            <h2 class="section-title">为什么选择 SmartKit？</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>快速处理</h3>
+                    <p>纯前端处理，无需上传服务器，秒速完成音频裁剪</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>隐私安全</h3>
+                    <p>文件不离开您的设备，100%保护您的隐私</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>可视化编辑</h3>
+                    <p>直观的波形图显示，精确到毫秒的裁剪控制</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h3>多格式支持</h3>
+                    <p>支持MP3、WAV、M4A、OGG、FLAC等主流音频格式</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>灵活导出</h3>
+                    <p>多种输出格式和质量选项，满足不同需求</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>全平台适配</h3>
+                    <p>完美支持PC、平板、手机等各种设备</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 使用教程 -->
+    <section id="tutorial" class="tutorial-section">
+        <div class="section-container">
+            <h2 class="section-title">如何裁剪音频？</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>选择文件</h3>
+                        <p>选择要编辑的音乐文件：拖放文件，或从硬盘或云存储上传。</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>调整间隔</h3>
+                        <p>通过拖动间隔控件或使用键盘上的箭头键来调整曲目的开始和结束。</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>下载结果</h3>
+                        <p>如有必要，同时使用多个功能——改变音高、改变音量或速度。</p>
+                        <div class="step-result">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 16v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4M7 10l5 5 5-5M12 3v12"/>
+                            </svg>
+                            <p>根据您的需要或偏好，将音乐保存为可用的输出格式之一。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Q&A -->
+    <section id="faq" class="faq-section">
+        <div class="section-container">
+            <h2 class="section-title">常见问题</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3 class="faq-question">支持哪些音频格式？</h3>
+                    <p class="faq-answer">我们支持MP3、WAV、M4A、OGG、FLAC等主流音频格式。几乎所有常见的音频文件都可以处理。</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">文件大小有限制吗？</h3>
+                    <p class="faq-answer">理论上没有严格限制，但建议单个文件不超过100MB，以确保流畅的处理体验。</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">如何精确选择时间？</h3>
+                    <p class="faq-answer">除了拖动边界，您还可以在时间输入框中直接输入精确的时间值，格式为MM:SS.mmm。</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">导出的音频质量如何？</h3>
+                    <p class="faq-answer">我们提供高、中、低三种质量选项。高质量(320kbps)几乎无损，适合专业用途。</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">我的文件安全吗？</h3>
+                    <p class="faq-answer">绝对安全！所有处理都在您的浏览器中完成，文件不会上传到任何服务器。</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">需要安装软件吗？</h3>
+                    <p class="faq-answer">不需要！这是一个纯网页应用，打开浏览器即可使用，无需下载或安装任何软件。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="logo/smartkit.svg" alt="SmartKit" class="footer-logo">
+                    <span class="footer-brand-name">SmartKit</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/emptylower/mp3cutter" target="_blank" class="footer-link">
+                        <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                    <a href="#" class="footer-link">隐私政策</a>
+                    <a href="#" class="footer-link">使用条款</a>
+                </div>
+            </div>
+            <p class="footer-bottom">&copy; 2024 SmartKit. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 加载提示 -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p id="loadingMessage">处理中...</p>
+        </div>
     </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" id="toast"></div>
 
     <script src="js/app.js"></script>
     <script src="js/audio-processor.js"></script>
     <script src="js/ui-controller.js"></script>
+    <script src="js/smooth-scroll.js"></script>
 </body>
 </html>

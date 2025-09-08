@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音频裁剪工具 - Audio Trimmer</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/wavesurfer.min.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.regions.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎵 音频裁剪工具</h1>
+            <p class="subtitle">轻松裁剪音频，支持多种格式</p>
+        </header>
+
+        <main>
+            <!-- 文件上传区域 -->
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-area" id="uploadArea">
+                    <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <p class="upload-text">拖拽音频文件到此处</p>
+                    <p class="upload-subtext">或</p>
+                    <button class="btn btn-primary" id="selectFileBtn">选择文件</button>
+                    <input type="file" id="fileInput" accept="audio/*" hidden>
+                    <p class="format-hint">支持格式：MP3, WAV, M4A, OGG, FLAC</p>
+                </div>
+            </div>
+
+            <!-- 音频编辑区域 -->
+            <div class="editor-section" id="editorSection" style="display: none;">
+                <!-- 音频信息 -->
+                <div class="audio-info">
+                    <div class="info-item">
+                        <span class="info-label">文件名:</span>
+                        <span id="fileName">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">时长:</span>
+                        <span id="duration">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">格式:</span>
+                        <span id="format">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">大小:</span>
+                        <span id="fileSize">-</span>
+                    </div>
+                </div>
+
+                <!-- 波形显示区域 -->
+                <div class="waveform-container">
+                    <div id="waveform"></div>
+                    <div id="wave-timeline"></div>
+                </div>
+
+                <!-- 播放控制 -->
+                <div class="controls">
+                    <div class="playback-controls">
+                        <button class="btn btn-icon" id="playBtn" title="播放/暂停">
+                            <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <svg class="pause-icon" style="display: none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </button>
+                        <button class="btn btn-icon" id="stopBtn" title="停止">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+                            </svg>
+                        </button>
+                        <button class="btn btn-icon" id="playRegionBtn" title="播放选中区域">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="zoom-controls">
+                        <button class="btn btn-icon" id="zoomInBtn" title="放大">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                            </svg>
+                        </button>
+                        <button class="btn btn-icon" id="zoomOutBtn" title="缩小">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 裁剪区域设置 -->
+                <div class="trim-settings">
+                    <h3>裁剪设置</h3>
+                    <div class="time-inputs">
+                        <div class="time-input-group">
+                            <label for="startTime">开始时间</label>
+                            <input type="text" id="startTime" placeholder="00:00.000" pattern="[0-9]{2}:[0-9]{2}\.[0-9]{3}">
+                        </div>
+                        <div class="time-input-group">
+                            <label for="endTime">结束时间</label>
+                            <input type="text" id="endTime" placeholder="00:00.000" pattern="[0-9]{2}:[0-9]{2}\.[0-9]{3}">
+                        </div>
+                        <div class="time-input-group">
+                            <label>选中时长</label>
+                            <input type="text" id="selectedDuration" readonly placeholder="00:00.000">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 导出设置 -->
+                <div class="export-settings">
+                    <h3>导出设置</h3>
+                    <div class="export-options">
+                        <div class="option-group">
+                            <label for="outputFormat">输出格式</label>
+                            <select id="outputFormat">
+                                <option value="mp3">MP3</option>
+                                <option value="wav">WAV</option>
+                                <option value="webm">WebM</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label for="outputQuality">音频质量</label>
+                            <select id="outputQuality">
+                                <option value="high">高质量 (320kbps)</option>
+                                <option value="medium" selected>标准质量 (192kbps)</option>
+                                <option value="low">低质量 (128kbps)</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label for="outputName">文件名</label>
+                            <input type="text" id="outputName" placeholder="trimmed_audio">
+                        </div>
+                    </div>
+                    <div class="export-actions">
+                        <button class="btn btn-primary btn-large" id="exportBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            导出并下载
+                        </button>
+                        <button class="btn btn-secondary" id="resetBtn">重新选择文件</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 加载提示 -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p id="loadingMessage">处理中...</p>
+            </div>
+        </div>
+
+        <!-- 提示消息 -->
+        <div class="toast" id="toast"></div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/audio-processor.js"></script>
+    <script src="js/ui-controller.js"></script>
+</body>
+</html>
