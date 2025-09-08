@@ -28,11 +28,6 @@ class UIController {
                 if (exportBtn) exportBtn.click();
             }
 
-            // Escape 清除选择
-            if (e.key === 'Escape') {
-                const clearBtn = document.getElementById('clearSelectionBtn');
-                if (clearBtn) clearBtn.click();
-            }
 
             // + 放大
             if (e.key === '+' || e.key === '=') {
@@ -52,9 +47,7 @@ class UIController {
         // 添加快捷键提示到按钮
         const shortcuts = {
             'playBtn': '空格键',
-            'selectAllBtn': 'Ctrl+A',
             'exportBtn': 'Ctrl+E',
-            'clearSelectionBtn': 'Esc',
             'zoomInBtn': '+',
             'zoomOutBtn': '-'
         };

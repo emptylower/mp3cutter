@@ -23,7 +23,6 @@ class AudioTrimmer {
             startTime: document.getElementById('startTime'),
             endTime: document.getElementById('endTime'),
             selectedDuration: document.getElementById('selectedDuration'),
-            clearSelectionBtn: document.getElementById('clearSelectionBtn'),
             exportBtn: document.getElementById('exportBtn'),
             resetBtn: document.getElementById('resetBtn'),
             loadingOverlay: document.getElementById('loadingOverlay'),
@@ -116,11 +115,6 @@ class AudioTrimmer {
 
         this.elements.endTime.addEventListener('change', () => {
             this.updateRegionFromInputs();
-        });
-
-        // 选择控制
-        this.elements.clearSelectionBtn.addEventListener('click', () => {
-            this.clearSelection();
         });
 
         // 导出和重置
@@ -393,12 +387,6 @@ class AudioTrimmer {
         }
     }
 
-    clearSelection() {
-        if (this.wavesurfer) {
-            this.wavesurfer.clearRegions();
-            this.clearTimeInputs();
-        }
-    }
 
     updateTimeInputs(start, end) {
         this.elements.startTime.value = this.formatTimeForInput(start);
