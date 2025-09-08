@@ -23,7 +23,6 @@ class AudioTrimmer {
             startTime: document.getElementById('startTime'),
             endTime: document.getElementById('endTime'),
             selectedDuration: document.getElementById('selectedDuration'),
-            selectAllBtn: document.getElementById('selectAllBtn'),
             clearSelectionBtn: document.getElementById('clearSelectionBtn'),
             exportBtn: document.getElementById('exportBtn'),
             resetBtn: document.getElementById('resetBtn'),
@@ -120,10 +119,6 @@ class AudioTrimmer {
         });
 
         // 选择控制
-        this.elements.selectAllBtn.addEventListener('click', () => {
-            this.selectAll();
-        });
-
         this.elements.clearSelectionBtn.addEventListener('click', () => {
             this.clearSelection();
         });
@@ -174,9 +169,7 @@ class AudioTrimmer {
                 plugins: [
                     WaveSurfer.regions.create({
                         regionsMinLength: 0.1,
-                        dragSelection: {
-                            slop: 5
-                        }
+                        dragSelection: false  // 禁用拖动创建新选区
                     })
                 ]
             });
@@ -198,8 +191,10 @@ class AudioTrimmer {
             this.hideLoading();
             this.showToast('音频加载成功', 'success');
 
-            // 默认选择全部
-            this.selectAll();
+            // 确保在所有事件处理完成后创建默认选区
+            setTimeout(() => {
+                this.createDefaultSelection();
+            }, 100);
 
         } catch (error) {
             console.error('加载音频失败:', error);
@@ -245,6 +240,79 @@ class AudioTrimmer {
             this.activeRegion = null;
             this.clearTimeInputs();
         });
+
+        // 实现边界检测和点击逻辑
+        const waveformElement = document.querySelector('#waveform');
+        let isNearBoundary = false;
+
+        // 辅助函数：检测是否靠近边界
+        const checkBoundary = (x) => {
+            if (!this.activeRegion) return null;
+            
+            const width = waveformElement.clientWidth;
+            const duration = this.wavesurfer.getDuration();
+            const startX = (this.activeRegion.start / duration) * width;
+            const endX = (this.activeRegion.end / duration) * width;
+            const threshold = 8; // 8像素检测范围
+            
+            if (Math.abs(x - startX) < threshold) return 'start';
+            if (Math.abs(x - endX) < threshold) return 'end';
+            return null;
+        };
+
+        // 鼠标移动时更新光标
+        waveformElement.addEventListener('mousemove', (e) => {
+            const rect = waveformElement.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const boundary = checkBoundary(x);
+            
+            if (boundary) {
+                waveformElement.style.cursor = 'ew-resize';
+                isNearBoundary = true;
+            } else {
+                waveformElement.style.cursor = 'pointer';
+                isNearBoundary = false;
+            }
+        });
+
+        // 点击事件处理
+        waveformElement.addEventListener('click', (e) => {
+            if (!isNearBoundary && this.activeRegion) {
+                // 不在边界上，跳转播放位置
+                const rect = waveformElement.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const progress = x / waveformElement.clientWidth;
+                this.wavesurfer.seekTo(progress);
+            }
+        });
+
+        // 移动端触摸支持
+        let touchBoundary = null;
+        let touchStartX = 0;
+
+        waveformElement.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            const rect = waveformElement.getBoundingClientRect();
+            touchStartX = touch.clientX - rect.left;
+            touchBoundary = checkBoundary(touchStartX);
+            
+            // 防止默认行为，避免页面滚动
+            if (touchBoundary) {
+                e.preventDefault();
+            }
+        });
+
+        waveformElement.addEventListener('touchend', (e) => {
+            if (!touchBoundary && this.activeRegion) {
+                // 不在边界上，跳转播放位置
+                const touch = e.changedTouches[0];
+                const rect = waveformElement.getBoundingClientRect();
+                const x = touch.clientX - rect.left;
+                const progress = x / waveformElement.clientWidth;
+                this.wavesurfer.seekTo(progress);
+            }
+            touchBoundary = null;
+        });
     }
 
     togglePlayPause() {
@@ -274,6 +342,37 @@ class AudioTrimmer {
         }
     }
 
+    createDefaultSelection() {
+        if (this.wavesurfer) {
+            const duration = this.wavesurfer.getDuration();
+            
+            // 清除现有区域
+            this.wavesurfer.clearRegions();
+            
+            // 创建默认选区（中间30%）
+            const start = duration * 0.35;
+            const end = duration * 0.65;
+            
+            // 创建选区
+            this.activeRegion = this.wavesurfer.addRegion({
+                start: start,
+                end: end,
+                color: 'rgba(99, 102, 241, 0.3)',
+                drag: false,  // 禁用整体拖动
+                resize: true   // 允许调整边界
+            });
+            
+            this.updateTimeInputs(start, end);
+            
+            // 确保选区创建成功
+            console.log('默认选区已创建:', {
+                start: this.formatTime(start),
+                end: this.formatTime(end),
+                duration: this.formatTime(end - start)
+            });
+        }
+    }
+
     selectAll() {
         if (this.wavesurfer) {
             const duration = this.wavesurfer.getDuration();
@@ -286,7 +385,7 @@ class AudioTrimmer {
                 start: 0,
                 end: duration,
                 color: 'rgba(99, 102, 241, 0.3)',
-                drag: true,
+                drag: false,  // 禁用整体拖动
                 resize: true
             });
             
