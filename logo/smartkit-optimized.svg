@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- SmartKit Logo: Modern audio waveform design with yellow/orange theme -->
+  
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#ffffff" stroke="#FFF4E0" stroke-width="2"/>
+  
+  <!-- Main waveform bars with gradient -->
+  <defs>
+    <linearGradient id="yellowGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFAB00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF9500;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF9500;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF6D00;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="lightGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFC947;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFAB00;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Audio waveform bars -->
+  <g id="waveform">
+    <!-- Left side bars -->
+    <rect x="40" y="85" width="8" height="30" rx="4" fill="url(#lightGradient)" opacity="0.7"/>
+    <rect x="52" y="70" width="8" height="60" rx="4" fill="url(#lightGradient)" opacity="0.8"/>
+    <rect x="64" y="55" width="8" height="90" rx="4" fill="url(#yellowGradient)" opacity="0.9"/>
+    
+    <!-- Center bars (highest) -->
+    <rect x="76" y="45" width="8" height="110" rx="4" fill="url(#yellowGradient)"/>
+    <rect x="88" y="40" width="8" height="120" rx="4" fill="url(#orangeGradient)"/>
+    <rect x="100" y="35" width="8" height="130" rx="4" fill="url(#orangeGradient)"/>
+    <rect x="112" y="40" width="8" height="120" rx="4" fill="url(#orangeGradient)"/>
+    <rect x="124" y="45" width="8" height="110" rx="4" fill="url(#yellowGradient)"/>
+    
+    <!-- Right side bars -->
+    <rect x="136" y="55" width="8" height="90" rx="4" fill="url(#yellowGradient)" opacity="0.9"/>
+    <rect x="148" y="70" width="8" height="60" rx="4" fill="url(#lightGradient)" opacity="0.8"/>
+    <rect x="160" y="85" width="8" height="30" rx="4" fill="url(#lightGradient)" opacity="0.7"/>
+  </g>
+  
+  <!-- Play button overlay (subtle) -->
+  <g id="play-button" opacity="0.25">
+    <circle cx="100" cy="100" r="25" fill="none" stroke="#FFAB00" stroke-width="2"/>
+    <path d="M 92 88 L 92 112 L 110 100 Z" fill="#FFAB00"/>
+  </g>
+</svg>
