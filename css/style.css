@@ -1,22 +1,48 @@
 :root {
+    /* 主色调 - 保留黄色系 */
     --primary-color: #FFAB00;
     --primary-hover: #FF9500;
     --primary-light: #FFF4E0;
+    --primary-dark: #CC8800;
+    
+    /* 深色系统 - 新增专业感 */
+    --dark-bg: #1A1514;
+    --dark-card: #2A241E;
+    --dark-border: #3D352C;
+    --dark-text: #F7F4EE;
+    --dark-text-secondary: #C4B5A4;
+    
+    /* 基础色 */
     --secondary-color: #666666;
     --secondary-hover: #333333;
     --success-color: #52C41A;
     --danger-color: #FF4D4F;
     --warning-color: #FAAD14;
+    
+    /* 浅色模式 */
     --bg-color: #FAFAFA;
     --card-bg: #FFFFFF;
     --text-primary: #1D1D1F;
     --text-secondary: #86868B;
     --border-color: #E5E5E7;
+    
+    /* 阴影系统 - 增强层次 */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
-    --radius: 12px;
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.16);
+    --shadow-glow: 0 0 40px rgba(255, 171, 0, 0.15);
+    
+    /* 圆角系统 */
+    --radius: 16px;
     --radius-sm: 8px;
+    --radius-lg: 24px;
+    --radius-full: 9999px;
+    
+    /* 动画时长 */
+    --transition-fast: 0.2s;
+    --transition-base: 0.3s;
+    --transition-slow: 0.5s;
 }
 
 * {
@@ -25,12 +51,67 @@
     box-sizing: border-box;
 }
 
+/* 平滑滚动 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 页面加载动画 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 动画类 */
+.animate-fadeInUp {
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.animate-fadeIn {
+    animation: fadeIn 1s ease forwards;
+}
+
+/* 延迟动画 */
+.animation-delay-200 {
+    animation-delay: 0.2s;
+}
+
+.animation-delay-400 {
+    animation-delay: 0.4s;
+}
+
+.animation-delay-600 {
+    animation-delay: 0.6s;
+}
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background: var(--bg-color);
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 标题字体 */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
 }
 
 .container {
@@ -66,23 +147,45 @@ header h1 {
 
 .upload-area {
     background: var(--card-bg);
-    border: 2px dashed #E5E5E7;
+    border: 2px dashed var(--border-color);
     border-radius: var(--radius);
     padding: 60px 20px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-area::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+    transition: all var(--transition-slow) ease;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
 }
 
 .upload-area:hover {
     border-color: var(--primary-color);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.upload-area:hover::before {
+    width: 600px;
+    height: 600px;
 }
 
 .upload-area.dragover {
-    background: #FFFBF0;
+    background: var(--primary-light);
     border-color: var(--primary-color);
     transform: scale(1.02);
+    box-shadow: var(--shadow-glow);
 }
 
 .upload-icon {
@@ -185,17 +288,41 @@ header h1 {
 }
 
 .btn {
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
     border-radius: var(--radius-sm);
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    position: relative;
+    overflow: hidden;
+    text-transform: none;
+    letter-spacing: 0.025em;
+}
+
+/* 按钮波纹效果 */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+    pointer-events: none;
+}
+
+.btn:active::after {
+    width: 300px;
+    height: 300px;
 }
 
 .btn:hover {
@@ -208,12 +335,16 @@ header h1 {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #FFAB00, #FF9500);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     color: white;
+    box-shadow: 0 4px 15px rgba(255, 171, 0, 0.25);
+    font-weight: 600;
 }
 
 .btn-primary:hover {
-    background: var(--primary-hover);
+    background: linear-gradient(135deg, var(--primary-hover), #FF6F00);
+    box-shadow: 0 6px 25px rgba(255, 171, 0, 0.35);
+    transform: translateY(-3px) scale(1.02);
 }
 
 .btn-secondary {
@@ -397,17 +528,35 @@ header h1 {
     right: 30px;
     background: var(--card-bg);
     color: var(--text-primary);
-    padding: 15px 20px;
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-lg);
+    padding: 16px 24px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-xl);
     transform: translateX(400px);
-    transition: transform 0.3s ease;
+    transition: all var(--transition-base) cubic-bezier(0.68, -0.55, 0.265, 1.55);
     z-index: 1001;
     max-width: 350px;
+    opacity: 0;
 }
 
 .toast.show {
     transform: translateX(0);
+    opacity: 1;
+    animation: toastBounce 0.5s ease;
+}
+
+@keyframes toastBounce {
+    0% {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    70% {
+        transform: translateX(-10px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 .toast.success {

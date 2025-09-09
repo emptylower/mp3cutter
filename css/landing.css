@@ -71,15 +71,36 @@
     color: var(--primary-color);
 }
 
-/* Hero Section */
+/* Hero Section - 深色专业风格 */
 .hero-section {
     min-height: 100vh;
     padding-top: 120px;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #FFFEF7 0%, #FFF9E6 100%);
+    background: var(--dark-bg);
     position: relative;
     overflow: hidden;
+}
+
+/* 动态渐变背景 */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255, 171, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 149, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 111, 0, 0.08) 0%, transparent 50%);
+    animation: gradientShift 20s ease infinite;
+    pointer-events: none;
+}
+
+@keyframes gradientShift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(-20px, -20px) scale(1.1); }
+    66% { transform: translate(20px, -10px) scale(0.95); }
 }
 
 .hero-container {
@@ -91,11 +112,22 @@
 }
 
 .hero-title {
-    font-size: 3.5rem;
-    font-weight: 700;
+    font-size: 4.5rem;
+    font-weight: 900;
     text-align: center;
     margin-bottom: 1.5rem;
-    letter-spacing: -1px;
+    letter-spacing: -2px;
+    color: var(--dark-text);
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 标题渐变效果 */
+.hero-title .gradient-text {
+    background: linear-gradient(135deg, #FFAB00, #FF6F00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
 }
 
 .gradient-text {
@@ -106,11 +138,15 @@
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;
-    color: var(--text-secondary);
+    font-size: 1.35rem;
+    color: var(--dark-text-secondary);
     text-align: center;
     margin-bottom: 3rem;
     font-weight: 400;
+    line-height: 1.8;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* 修改上传区域在Hero中的样式 */
@@ -179,19 +215,45 @@
 }
 
 .feature-card {
-    background: #FFFFFF;
-    padding: 2rem;
-    border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    transition: all 0.3s ease;
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-base) cubic-bezier(0.4, 0, 0.2, 1);
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 卡片悬停光效 */
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 171, 0, 0.03), transparent);
+    transform: rotate(45deg) translateX(-100%);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
 }
 
 .feature-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-    border-color: rgba(255, 184, 0, 0.3);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-color);
+}
+
+.feature-card:hover::before {
+    animation: shimmer 0.6s ease;
+    opacity: 1;
+}
+
+@keyframes shimmer {
+    0% { transform: rotate(45deg) translateX(-100%); }
+    100% { transform: rotate(45deg) translateX(100%); }
 }
 
 .feature-icon {
@@ -217,6 +279,84 @@
     color: var(--text-secondary);
     line-height: 1.6;
     font-size: 0.95rem;
+}
+
+/* 数据统计区域 - 信任体系 */
+.stats-section {
+    padding: 100px 20px;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #2A241E 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.stats-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 171, 0, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.stats-section .section-title {
+    color: var(--dark-text);
+    margin-bottom: 1rem;
+}
+
+.stats-section .section-subtitle {
+    color: var(--dark-text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 171, 0, 0.1);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(10px);
+    transition: all var(--transition-base) ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 171, 0, 0.3);
+    box-shadow: 0 10px 40px rgba(255, 171, 0, 0.1);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 900;
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(135deg, #FFAB00, #FF6F00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+}
+
+.stat-desc {
+    font-size: 0.9rem;
+    color: var(--dark-text-secondary);
 }
 
 /* Tutorial Section - 模仿提供的图片设计 */
@@ -422,26 +562,86 @@
     }
 }
 
-/* 响应式设计 */
+/* 响应式设计 - 增强移动端体验 */
 @media (max-width: 768px) {
+    /* 导航响应式 */
     .nav-menu {
         display: none;
     }
+    
+    .navbar {
+        backdrop-filter: saturate(180%) blur(10px);
+    }
+    
+    .nav-container {
+        padding: 0 1rem;
+        height: 56px;
+    }
+    
+    .logo {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .brand-name {
+        font-size: 1.25rem;
+    }
 
+    /* Hero响应式 */
+    .hero-section {
+        padding-top: 80px;
+        min-height: 100vh;
+    }
+    
     .hero-title {
         font-size: 2.5rem;
+        letter-spacing: -1px;
+        line-height: 1.2;
     }
 
     .hero-subtitle {
-        font-size: 1.2rem;
+        font-size: 1rem;
+        padding: 0 1rem;
+        line-height: 1.6;
     }
 
     .section-title {
         font-size: 2rem;
+        padding: 0 1rem;
+    }
+    
+    .section-subtitle {
+        font-size: 0.95rem;
+        padding: 0 1rem;
     }
 
     .features-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .feature-card {
+        padding: 1.75rem;
+    }
+    
+    /* 数据统计响应式 */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .stat-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .stat-label {
+        font-size: 1rem;
     }
 
     .steps-container {
