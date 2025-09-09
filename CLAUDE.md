@@ -1,14 +1,14 @@
 # CLAUDE.md
-总是用英文思考用中文回答我
+用英文思考，用中文回答我
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
-This is a browser-based audio trimming web application that operates entirely client-side. It allows users to upload audio files, visualize waveforms, select regions for trimming, and export the trimmed audio in multiple formats.
+Browser-based audio trimming web application that operates entirely client-side. Supports audio file upload, waveform visualization, region selection for trimming, and multi-format export.
 
 ## Running the Application
 
-The application requires no build process. To run locally with full functionality:
+No build process required. To run locally with full functionality:
 
 ```bash
 # Python HTTP server (recommended)
@@ -18,62 +18,55 @@ python -m http.server 8000
 npx http-server
 ```
 
-Then visit `http://localhost:8000`. Direct file opening (`file://`) has limited functionality.
+Visit `http://localhost:8000`. Direct file opening (`file://`) has limited functionality.
 
 ## Architecture
 
 ### Core Components
 
 1. **AudioTrimmer** (`js/app.js`) - Main application controller
-   - Manages WaveSurfer.js instance for waveform visualization
-   - Handles file uploads and audio loading
-   - Controls region selection and trimming
-   - Implements export functionality with format conversion
+   - WaveSurfer.js instance management
+   - File upload and audio loading
+   - Region selection and trimming control
+   - Export functionality with format conversion
 
-2. **AudioProcessor** (`js/audio-processor.js`) - Audio manipulation utilities
-   - Provides audio effects (fade, normalize, reverse, speed change)
-   - Handles silence detection and removal
-   - Contains WAV encoding and buffer manipulation functions
+2. **AudioProcessor** (`js/audio-processor.js`) - Audio manipulation
+   - Audio effects (fade, normalize, reverse, speed change)
+   - Silence detection and removal
+   - WAV encoding and buffer manipulation
 
 3. **UIController** (`js/ui-controller.js`) - UI enhancements
-   - Manages keyboard shortcuts (Space, Ctrl+A, Ctrl+E, Esc, +/-)
-   - Provides progress indicators and notifications
-   - Handles browser compatibility checks
+   - Keyboard shortcuts (Space, Ctrl+A, Ctrl+E, Esc, +/-)
+   - Progress indicators and notifications
+   - Browser compatibility checks
 
 ### External Dependencies
 
-Loaded via CDN in `index.html`:
+CDN-loaded in `index.html`:
 - **WaveSurfer.js v6.6.4** - Waveform visualization and region selection
-- **LameJS v1.2.1** - MP3 encoding capability
+- **LameJS v1.2.1** - MP3 encoding
 
 ### Audio Export Implementation
 
-The export system handles three formats differently:
-- **WAV**: Native implementation using ArrayBuffer manipulation
-- **MP3**: Uses LameJS library for proper MP3 encoding
-- **WebM**: Uses MediaRecorder API (browser-dependent)
+Format-specific handling:
+- **WAV**: Native ArrayBuffer manipulation
+- **MP3**: LameJS library encoding
+- **WebM**: MediaRecorder API (browser-dependent)
 
 ### Key Technical Decisions
 
-1. **No Build System**: Pure static files for simplicity and immediate deployment
-2. **Client-Side Processing**: All audio processing happens in browser using Web Audio API
-3. **Format Support**: Reads MP3, WAV, M4A, OGG, FLAC; exports MP3, WAV, WebM
-4. **Region Selection**: Uses WaveSurfer.js regions plugin for visual selection
+1. **No Build System**: Pure static files for simplicity
+2. **Client-Side Processing**: Web Audio API in browser
+3. **Format Support**: Input - MP3, WAV, M4A, OGG, FLAC; Output - MP3, WAV, WebM
+4. **Region Selection**: WaveSurfer.js regions plugin
 
-## Common Development Tasks
+## Commands
 
-### Adding New Audio Effects
-New effects should be added to `AudioProcessor` class in `js/audio-processor.js`. Follow the existing pattern of operating on AudioBuffer objects.
-
-### Modifying Export Formats
-Export logic is in `AudioTrimmer.exportAudio()` method. Each format has its own conversion method (`audioBufferToWav`, `audioBufferToMp3`, `audioBufferToWebM`).
-
-### Updating UI Styles
-All styles are in `css/style.css` using CSS variables for theming. The application supports both light and dark modes via media queries.
+No build/test commands - this is a static site. Development only requires a local HTTP server.
 
 ## Important Notes
 
-- The application uses WaveSurfer.js 6.x API (not 7.x) for stability
-- MP3 export requires LameJS library loaded in the browser
-- Large files may cause performance issues due to client-side processing
+- WaveSurfer.js 6.x API (not 7.x) for stability
+- MP3 export requires LameJS library
+- Large files may cause performance issues
 - Browser compatibility: Chrome 60+, Firefox 55+, Safari 11+, Edge 79+

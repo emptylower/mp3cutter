@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>隐私政策 - SmartKit音频裁剪器</title>
+    <meta name="description" content="SmartKit音频裁剪器的隐私政策，了解我们如何保护您的数据安全和隐私。">
+    <link rel="canonical" href="https://smartkit.online/privacy.html">
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#0ea5e9">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="logo/smartkit.svg">
+    <link rel="apple-touch-icon" href="logo/smartkit.svg">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/landing.css">
+    
+    <style>
+        .privacy-container {
+            max-width: 800px;
+            margin: 80px auto 40px;
+            padding: 40px 20px;
+        }
+        .privacy-container h1 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+        .privacy-container h2 {
+            color: #334155;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        .privacy-container p, .privacy-container li {
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .privacy-container ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: #0ea5e9;
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: transform 0.2s;
+        }
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+        .back-link svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        .update-date {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="brand">
+                    <img src="logo/smartkit.svg" alt="SmartKit" class="logo">
+                    <span class="brand-name">SmartKit</span>
+                </div>
+                <div class="nav-menu">
+                    <a href="/" class="nav-link">首页</a>
+                    <a href="/#features" class="nav-link">功能</a>
+                    <a href="/#tutorial" class="nav-link">教程</a>
+                    <a href="/#faq" class="nav-link">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="privacy-container">
+        <a href="/" class="back-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            返回首页
+        </a>
+        
+        <h1>隐私政策</h1>
+        <p class="update-date">最后更新：2025年1月9日</p>
+        
+        <p>SmartKit音频裁剪器（以下简称"我们"）非常重视您的隐私保护。本隐私政策旨在向您说明我们如何处理您的信息。</p>
+        
+        <h2>🔒 核心承诺</h2>
+        <p><span class="highlight">所有音频处理均在您的浏览器本地完成，我们不会上传、存储或访问您的任何音频文件。</span></p>
+        
+        <h2>1. 信息收集</h2>
+        <p>我们的服务设计遵循"隐私优先"原则：</p>
+        <ul>
+            <li><strong>不收集音频文件</strong>：您上传的所有音频文件仅在您的设备上处理，不会传输到我们的服务器</li>
+            <li><strong>不要求注册</strong>：使用我们的服务无需创建账户或提供个人信息</li>
+            <li><strong>不使用Cookies追踪</strong>：我们不使用追踪Cookies或类似技术收集您的浏览行为</li>
+        </ul>
+        
+        <h2>2. 本地处理技术</h2>
+        <p>我们使用以下浏览器技术确保您的数据安全：</p>
+        <ul>
+            <li><strong>Web Audio API</strong>：在浏览器中直接处理音频，无需服务器参与</li>
+            <li><strong>File API</strong>：直接读取本地文件，不经过网络传输</li>
+            <li><strong>Blob URLs</strong>：生成的音频文件通过浏览器直接下载，不经过服务器</li>
+        </ul>
+        
+        <h2>3. 第三方服务</h2>
+        <p>我们使用以下第三方CDN服务来加载必要的JavaScript库：</p>
+        <ul>
+            <li><strong>unpkg.com</strong>：提供WaveSurfer.js库</li>
+            <li><strong>cdn.jsdelivr.net</strong>：提供LameJS库</li>
+        </ul>
+        <p>这些CDN服务可能会记录访问日志（如IP地址），但不会访问您的音频内容。</p>
+        
+        <h2>4. 数据存储</h2>
+        <ul>
+            <li>我们<strong>不存储</strong>您的音频文件</li>
+            <li>我们<strong>不保存</strong>您的编辑历史</li>
+            <li>所有处理完成后，数据仅存在于您的设备上</li>
+        </ul>
+        
+        <h2>5. 数据安全</h2>
+        <p>由于所有处理都在本地完成：</p>
+        <ul>
+            <li>不存在数据泄露风险（因为我们不收集数据）</li>
+            <li>不存在服务器被攻击的风险（因为不上传数据）</li>
+            <li>您的音频文件始终在您的控制之下</li>
+        </ul>
+        
+        <h2>6. 儿童隐私</h2>
+        <p>我们的服务适合所有年龄段使用。由于我们不收集任何个人信息，儿童可以安全使用我们的服务。</p>
+        
+        <h2>7. 隐私政策更新</h2>
+        <p>如果我们更新隐私政策，将在本页面发布新版本并更新"最后更新"日期。重大变更将在网站首页通知。</p>
+        
+        <h2>8. 联系我们</h2>
+        <p>如果您对本隐私政策有任何疑问或建议，请通过以下方式联系我们：</p>
+        <ul>
+            <li>GitHub: <a href="https://github.com/smartkit" target="_blank" rel="noopener">@smartkit</a></li>
+            <li>邮箱: privacy@smartkit.online</li>
+        </ul>
+        
+        <h2>9. 适用法律</h2>
+        <p>本隐私政策受中华人民共和国法律管辖。我们承诺遵守所有适用的数据保护法律法规。</p>
+        
+        <div style="margin-top: 50px; padding-top: 30px; border-top: 1px solid #e2e8f0;">
+            <p style="text-align: center; color: #94a3b8;">
+                © 2025 SmartKit. 保护您的隐私是我们的首要任务。
+            </p>
+        </div>
+    </div>
+    
+    <!-- 添加平滑滚动 -->
+    <script src="js/smooth-scroll.js"></script>
+</body>
+</html>

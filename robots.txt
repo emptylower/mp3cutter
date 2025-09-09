@@ -1,0 +1,26 @@
+# SmartKit Audio Trimmer robots.txt
+# https://smartkit.online/
+
+User-agent: *
+Allow: /
+Disallow: /test%20music/
+Disallow: /index_backup.html
+
+# Crawl-delay for bots that respect it
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://smartkit.online/sitemap.xml
+
+# Popular search engine bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Sogou
+Allow: /
