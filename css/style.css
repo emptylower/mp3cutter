@@ -106,12 +106,12 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* 标题字体 */
+/* 标题字体 - 使用Poppins */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Poppins', 'Inter', sans-serif;
     font-weight: 700;
     line-height: 1.2;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
 }
 
 .container {
